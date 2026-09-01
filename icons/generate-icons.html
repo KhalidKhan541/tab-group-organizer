@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head><title>Icon Generator</title></head>
+<body>
+<p>Run this in a browser to generate icons. Right-click each canvas and save as PNG.</p>
+<script>
+function generateIcon(size) {
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#4285f4';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, size, size, size * 0.15);
+  ctx.fill();
+
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = size * 0.06;
+  ctx.lineCap = 'round';
+
+  const m = size * 0.25;
+  const w = size * 0.5;
+  ctx.beginPath();
+  ctx.moveTo(m, m + size * 0.1);
+  ctx.lineTo(m, m + w * 0.3);
+  ctx.moveTo(m + w * 0.3, m);
+  ctx.lineTo(m + w * 0.3, m + w * 0.5);
+  ctx.moveTo(m + w * 0.6, m);
+  ctx.lineTo(m + w * 0.6, m + w * 0.7);
+  ctx.moveTo(m + w, m + size * 0.1);
+  ctx.lineTo(m + w, m + w);
+  ctx.stroke();
+
+  ctx.fillStyle = 'white';
+  ctx.fillRect(m - size*0.04, m + w * 0.3 - size*0.02, w * 0.38, size * 0.04);
+  ctx.fillRect(m + w * 0.3 - size*0.04, m + w * 0.5 - size*0.02, w * 0.38, size * 0.04);
+  ctx.fillRect(m + w * 0.6 - size*0.04, m + w * 0.7 - size*0.02, w * 0.42, size * 0.04);
+
+  return canvas.toDataURL('image/png');
+}
+
+[16, 32, 48, 128].forEach(size => {
+  const img = document.createElement('img');
+  img.src = generateIcon(size);
+  img.width = size;
+  img.height = size;
+  img.style.margin = '10px';
+  img.title = size + 'x' + size;
+  document.body.appendChild(img);
+
+  const a = document.createElement('a');
+  a.href = generateIcon(size);
+  a.download = 'icon' + size + '.png';
+  a.textContent = 'Download ' + size + 'x' + size;
+  a.style.display = 'block';
+  a.style.marginLeft = '10px';
+  document.body.appendChild(a);
+});
+</script>
+</body>
+</html>

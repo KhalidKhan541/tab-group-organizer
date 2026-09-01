@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Group Organizer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="header">
+      <div class="header-top">
+        <h1 class="title">Tab Group Organizer</h1>
+        <div class="header-actions">
+          <button class="icon-btn" id="themeToggle" title="Toggle theme">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path class="sun" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+          </button>
+          <button class="icon-btn" id="settingsBtn" title="Settings">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <p class="subtitle">Manage <span id="tabCount">0</span> tabs across <span id="groupCount">0</span> groups</p>
+    </header>
+
+    <nav class="tabs-nav">
+      <button class="tab-btn active" data-tab="organize">Organize</button>
+      <button class="tab-btn" data-tab="groups">Groups</button>
+      <button class="tab-btn" data-tab="projects">Projects</button>
+      <button class="tab-btn" data-tab="rules">Rules</button>
+    </nav>
+
+    <!-- Organize Tab -->
+    <section class="tab-panel active" id="panel-organize">
+      <div class="quick-actions">
+        <button class="btn btn-primary" id="autoGroupBtn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          Auto-Group All
+        </button>
+        <button class="btn btn-secondary" id="collapseAllBtn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+          Collapse All
+        </button>
+        <button class="btn btn-secondary" id="expandAllBtn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+          Expand All
+        </button>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Grouping Mode</h2>
+        <div class="mode-selector">
+          <label class="radio-card">
+            <input type="radio" name="groupMode" value="domain" checked>
+            <span class="radio-label">
+              <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+              </svg>
+              By Domain
+            </span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="groupMode" value="project">
+            <span class="radio-label">
+              <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+              </svg>
+              By Project
+            </span>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="groupMode" value="custom">
+            <span class="radio-label">
+              <svg class="radio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              Custom Rules
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section" id="presetSection">
+        <h2 class="section-title">Preset Groupings</h2>
+        <div class="preset-grid">
+          <button class="preset-btn" data-preset="social">
+            <span class="preset-icon">💬</span>
+            <span class="preset-label">Social</span>
+          </button>
+          <button class="preset-btn" data-preset="shopping">
+            <span class="preset-icon">🛒</span>
+            <span class="preset-label">Shopping</span>
+          </button>
+          <button class="preset-btn" data-preset="dev">
+            <span class="preset-icon">💻</span>
+            <span class="preset-label">Dev</span>
+          </button>
+          <button class="preset-btn" data-preset="news">
+            <span class="preset-icon">📰</span>
+            <span class="preset-label">News</span>
+          </button>
+          <button class="preset-btn" data-preset="entertainment">
+            <span class="preset-icon">🎮</span>
+            <span class="preset-label">Entertainment</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="section" id="ungroupedSection">
+        <h2 class="section-title">Ungrouped Tabs (<span id="ungroupedCount">0</span>)</h2>
+        <div class="tab-list" id="ungroupedList"></div>
+      </div>
+    </section>
+
+    <!-- Groups Tab -->
+    <section class="tab-panel" id="panel-groups">
+      <div class="section">
+        <h2 class="section-title">Existing Groups</h2>
+        <div class="groups-list" id="groupsList"></div>
+      </div>
+    </section>
+
+    <!-- Projects Tab -->
+    <section class="tab-panel" id="panel-projects">
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Projects</h2>
+          <button class="btn btn-sm btn-primary" id="addProjectBtn">+ New Project</button>
+        </div>
+        <div class="projects-list" id="projectsList"></div>
+      </div>
+    </section>
+
+    <!-- Rules Tab -->
+    <section class="tab-panel" id="panel-rules">
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Auto-Group Rules</h2>
+          <button class="btn btn-sm btn-primary" id="addRuleBtn">+ New Rule</button>
+        </div>
+        <div class="rules-list" id="rulesList"></div>
+      </div>
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Settings</h2>
+        </div>
+        <div class="settings-grid">
+          <label class="setting-toggle">
+            <input type="checkbox" id="autoGroupOnCreate" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Auto-group new tabs</span>
+          </label>
+          <label class="setting-toggle">
+            <input type="checkbox" id="preserveExisting">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Preserve existing groups</span>
+          </label>
+          <label class="setting-toggle">
+            <input type="checkbox" id="showBadge" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Show badge count</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistics Panel -->
+    <div class="stats-bar" id="statsBar">
+      <span class="stat">Open: <strong id="statOpen">0</strong></span>
+      <span class="stat">Grouped: <strong id="statGrouped">0</strong></span>
+      <span class="stat">Ungrouped: <strong id="statUngrouped">0</strong></span>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="projectModalTitle">New Project</h3>
+        <button class="icon-btn modal-close" data-close="projectModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Project Name</label>
+          <input type="text" id="projectName" placeholder="My Project">
+        </div>
+        <div class="form-group">
+          <label>Color</label>
+          <div class="color-picker" id="projectColorPicker"></div>
+        </div>
+        <div class="form-group">
+          <label>Domain Patterns (one per line)</label>
+          <textarea id="projectDomains" rows="4" placeholder="example.com&#10;*.github.com&#10;/regex-pattern/"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="projectDesc" placeholder="Optional description">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="projectModal">Cancel</button>
+        <button class="btn btn-primary" id="saveProjectBtn">Save Project</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="ruleModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="ruleModalTitle">New Rule</h3>
+        <button class="icon-btn modal-close" data-close="ruleModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Rule Name</label>
+          <input type="text" id="ruleName" placeholder="Social Media">
+        </div>
+        <div class="form-group">
+          <label>URL Pattern</label>
+          <input type="text" id="rulePattern" placeholder="facebook.com, twitter.com">
+        </div>
+        <div class="form-group">
+          <label>Pattern Type</label>
+          <select id="ruleType">
+            <option value="domain">Domain (comma-separated)</option>
+            <option value="wildcard">Wildcard (*.example.com)</option>
+            <option value="regex">Regular Expression</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Group Name</label>
+          <input type="text" id="ruleGroupName" placeholder="Social Media">
+        </div>
+        <div class="form-group">
+          <label>Group Color</label>
+          <div class="color-picker" id="ruleColorPicker"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-close="ruleModal">Cancel</button>
+        <button class="btn btn-primary" id="saveRuleBtn">Save Rule</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="organizer.js"></script>
+  <script src="projects.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
